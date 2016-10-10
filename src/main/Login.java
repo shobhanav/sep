@@ -122,7 +122,7 @@ public class Login {
 		frmSwedishEventPlanner.getContentPane().add(ImagePanel, BorderLayout.WEST);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\eavnvya\\workspace\\SEP\\images\\images.jpg"));
+		lblNewLabel_2.setIcon(new ImageIcon(Login.class.getResource("/resources/images.jpg")));
 		ImagePanel.add(lblNewLabel_2);
 	}
 
