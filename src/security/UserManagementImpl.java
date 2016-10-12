@@ -65,7 +65,7 @@ public class UserManagementImpl implements UserManagementInterface {
 			return false;
 		}
 		ArrayList<String> roles = authzMap.get(uName);
-		if (roles != null && roles.contains(role)){
+		if (roles.contains(role)){
 			return false;
 		}
 		roles.add(role);

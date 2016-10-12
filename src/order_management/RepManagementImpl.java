@@ -8,7 +8,6 @@ public class RepManagementImpl implements RepManagementInterface {
 	
 	@Override
 	public Rep createRep(String uname, String clientName) {
-		// TODO Auto-generated method stub
 		return new Rep(uname, clientName);
 	}
 
