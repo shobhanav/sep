@@ -22,7 +22,7 @@ public class Rep {
 	
 	private int exp_budget;
 	
-	public RepState state;
+	private RepState state;
 	
 	private EventPreferences preference;
 	
@@ -100,6 +100,9 @@ public class Rep {
 
 	public int getIdentifier() {
 		return identifier;
+	}
+	public RepState getState (){
+		return state;
 	}
 	
 }
