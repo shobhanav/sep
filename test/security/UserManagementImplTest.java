@@ -159,7 +159,5 @@ public class UserManagementImplTest {
 		assertTrue("The user should have been unsuccessfully added",verification);
 		verification = authnMap.get("RHm").equals("password7");
 		assertTrue("The password should have been unsuccessfull",verification);
-		verification = userManagement.addUser("RHm", "password7");
-		assertTrue("The user should have been unsuccessfully added",verification);
 	}
 }
