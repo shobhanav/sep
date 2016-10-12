@@ -159,5 +159,26 @@ public class UserManagementImplTest {
 		assertTrue("The user should have been unsuccessfully added",verification);
 		verification = authnMap.get("RHm").equals("password7");
 		assertTrue("The password should have been unsuccessfull",verification);
+		ArrayList<String> role = userManagement.getRoles("RHm");
+		verification = role.size()==0;
+		assertTrue("The user should have been successfully validated",verification);
+		verification = userManagement.addRole("RHm", "addEmployee");
+		assertTrue("The user should have been unsuccessfully added role",verification);
+		verification = authzMap.get("RHm").contains( "addEmployee") ;
+		assertTrue("The user should have been unsuccessfully added role", verification);
+		role = userManagement.getRoles("RHm");
+		verification = (role.size() == 1);
+		assertTrue("The user should have been successfully validated",verification);
+		verification = userManagement.removeRole("RHm", "addEmployee");
+		assertTrue("The user should have been unsuccessfully changed password",verification);
+		role = userManagement.getRoles("RHm");
+		verification = (role.size() == 0);
+		assertTrue("The user should have been successfully validated",verification);
+		verification = userManagement.removeUser("RHm");
+		assertTrue("The user should have been unsuccessfully removed",verification);
+		verification = authnMap.containsKey("RHm") ;
+		assertFalse("The user should have been unsuccessfully removed",verification);
+		verification = userManagement.isAuthenticated("RHm", "password7");
+		assertFalse("The user should have been unsuccessfully added",verification);
 	}
 }
