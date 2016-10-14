@@ -36,4 +36,15 @@ public class RepManagementImpl implements RepManagementInterface {
 	}
 
 
+	@Override
+	public Rep getRep(int id) {
+		for(Rep rep: reps){
+			if(rep.getIdentifier()==id){
+				return rep;
+			}
+		}
+		return null;
+	}
+
+
 }

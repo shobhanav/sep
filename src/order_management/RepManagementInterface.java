@@ -9,6 +9,8 @@ public interface RepManagementInterface {
 	public boolean addRep(Rep rep);
 	
 	public ArrayList<Rep> listRep(String uname);
+	
+	public Rep getRep(int id);
 
 
 }

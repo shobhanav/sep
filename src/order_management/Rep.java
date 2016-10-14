@@ -1,6 +1,8 @@
 package order_management;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Rep {
 	
@@ -25,6 +27,8 @@ public class Rep {
 	private RepState state;
 	
 	private EventPreferences preference;
+	
+	private HashMap<String, String> comments = new HashMap<String, String>();
 	
 	public Rep(String uname, String clientName){		
 		identifier = index;
@@ -103,6 +107,14 @@ public class Rep {
 	}
 	public RepState getState (){
 		return state;
+	}
+	
+	public void addComment(String role, String comment){
+		comments.put(role, comment);
+	}
+	
+	public void setState (RepState state){
+		this.state = state;
 	}
 	
 }
