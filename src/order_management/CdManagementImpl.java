@@ -7,9 +7,10 @@ public class CdManagementImpl implements CrdManagementInterface{
 	private ArrayList<Crd> crds = new ArrayList<Crd>();
 	
 	@Override
-	public boolean createCrd(Rep rep) {
-		crds.add(new Crd(rep));
-		return true;
+	public Crd createCrd(Rep rep) {
+		Crd newCrd = new Crd(rep);
+		crds.add(newCrd);
+		return newCrd;
 	}
 
 	@Override
@@ -26,7 +27,5 @@ public class CdManagementImpl implements CrdManagementInterface{
 	public ArrayList<Crd> getAllCrd() {
 		return crds;
 	}
-	
-	
 
 }
