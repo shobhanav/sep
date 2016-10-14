@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface CrdManagementInterface {
 	
-	public Crd createCrd( Rep rep);
+	public boolean createCrd( Rep rep);
 	
 	public Crd getCrd(Rep rep);
 	
