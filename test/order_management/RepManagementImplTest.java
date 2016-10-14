@@ -8,7 +8,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import security.UserManagementImpl;
 
 public class RepManagementImplTest {
 	RepManagementInterface repMng;
