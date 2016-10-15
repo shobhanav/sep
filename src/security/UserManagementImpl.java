@@ -37,6 +37,14 @@ public class UserManagementImpl implements UserManagementInterface {
 		ArrayList<String> adminRoles = new ArrayList<String>();		
 		adminRoles.add("admin");
 		authzMap.put("admin", adminRoles);
+		
+		ArrayList<String> prodRoles = new ArrayList<String>();		
+		prodRoles.add("pm");
+		authzMap.put("prod_manager", prodRoles);
+		
+		ArrayList<String> servRoles = new ArrayList<String>();		
+		servRoles.add("sm");
+		authzMap.put("service_manager", servRoles);
 	}
 
 	private void initUsers(HashMap<String, String> authnMap2) {

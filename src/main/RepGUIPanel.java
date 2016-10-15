@@ -9,6 +9,7 @@ import javax.swing.JTabbedPane;
 
 import framework.ServiceLocator;
 import framework.Session;
+import order_management.Crd;
 import order_management.Rep;
 import order_management.RepState;
 
@@ -29,10 +30,12 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import java.awt.Color;
 
 public class RepGUIPanel extends JPanel {
 	private String selected;
-	JButton btnModify;
 	JButton btnDelete;
 	JList list;
 	JButton btnSendToAdmin;
@@ -44,6 +47,7 @@ public class RepGUIPanel extends JPanel {
 	private JLabel lblNewLabel;
 	private JTextField fmCommentsTxtField;
 	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
 	
 	
 
@@ -70,9 +74,7 @@ public class RepGUIPanel extends JPanel {
 		
 		final DefaultListModel<String> listModel = new DefaultListModel<String>();
 		
-		for(Rep rep:repList){
-			listModel.addElement("Id: " + rep.getIdentifier() + ", Client: "+ rep.getClientName() + ", createdBy: " + rep.getUname()+ ", Status: " + rep.getState().toString());
-		}
+		refreshListModel(listModel, repList);
 		setLayout(null);
 		
 		list = new JList();
@@ -81,7 +83,7 @@ public class RepGUIPanel extends JPanel {
 		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				if(list.getSelectedIndex() != -1){
-					btnModify.setEnabled(true);
+					
 					btnDelete.setEnabled(true);
 					btnSendToAdmin.setEnabled(true);
 					btnSendToFm.setEnabled(true);
@@ -108,8 +110,7 @@ public class RepGUIPanel extends JPanel {
 						fmCommentsTxtField.setText("");
 								
 					
-				}else{
-					btnModify.setEnabled(false);
+				}else{					
 					btnDelete.setEnabled(false);
 					btnSendToAdmin.setEnabled(false);
 					btnSendToFm.setEnabled(false);
@@ -120,7 +121,7 @@ public class RepGUIPanel extends JPanel {
 				}
 			}
 		});
-		list.setBounds(92, 30, 436, 100);
+		list.setBounds(92, 66, 436, 100);
 		list.setPreferredSize(new Dimension(71, 100));
 		list.setAutoscrolls(true);
 		list.setModel(listModel);
@@ -145,7 +146,7 @@ public class RepGUIPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				Rep rep = ServiceLocator.getRepService().createRep(sess.getCurrentUser(), "XYZ corp");
 				ServiceLocator.getRepService().addRep(rep);
-				listModel.addElement("Id: " + rep.getIdentifier() + ", Client: "+ rep.getClientName() + ", createdBy: " + rep.getUname() + ", Status: " + rep.getState().toString());
+				refreshListModel(listModel, ServiceLocator.getRepService().listRep(sess.getCurrentUser()=="scso"?"all":sess.getCurrentUser()));
 			}
 		});		
 		btnCreate.setBounds(103, 11, 89, 23);
@@ -154,11 +155,6 @@ public class RepGUIPanel extends JPanel {
 		if(!roles.contains("cso") && !roles.contains("scso") ){
 			btnCreate.setVisible(false);
 		}
-		
-		btnModify = new JButton("Modify");
-		btnModify.setEnabled(false);
-		btnModify.setBounds(202, 11, 89, 23);
-		Btnpanel.add(btnModify);
 		
 		btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
@@ -188,6 +184,10 @@ public class RepGUIPanel extends JPanel {
 				String comment = scsoCommentField.getText();
 				rep.addComment("scso", comment);
 				list.clearSelection();
+				listModel.clear();
+				
+				ArrayList<Rep> reps = ServiceLocator.getRepService().listRep("all");
+				refreshListModel(listModel, reps);
 			}
 		});
 		btnSendToFm.setBounds(92, 263, 116, 23);
@@ -206,6 +206,7 @@ public class RepGUIPanel extends JPanel {
 				String comment = fmCommentsTxtField.getText();
 				rep.addComment("fm", comment);
 				list.clearSelection();
+				refreshListModel(listModel, ServiceLocator.getRepService().getRep(RepState.REVIEWED_BY_SCSO));
 			}
 		});
 		btnSendToAdmin.setBounds(236, 263, 124, 23);
@@ -222,6 +223,12 @@ public class RepGUIPanel extends JPanel {
 				Rep rep = ServiceLocator.getRepService().getRep(Integer.parseInt(id));
 				rep.setState(RepState.REJECTED);
 				list.clearSelection();
+				btnReject.setEnabled(false);
+				if (sess.getCurrentUser().equals("admin")){
+					refreshListModel(listModel, ServiceLocator.getRepService().getRep(RepState.REVIEWED_BY_FM));
+				}else{
+					refreshListModel(listModel, ServiceLocator.getRepService().listRep("all"));
+				}
 				
 			}
 		});
@@ -239,6 +246,8 @@ public class RepGUIPanel extends JPanel {
 				Rep rep = ServiceLocator.getRepService().getRep(Integer.parseInt(id));
 				rep.setState(RepState.APPROVED);
 				list.clearSelection();
+				btnApprove.setEnabled(false);
+				refreshListModel(listModel, ServiceLocator.getRepService().getRep(RepState.REVIEWED_BY_FM));
 			}
 		});
 		btnApprove.setEnabled(false);
@@ -249,6 +258,13 @@ public class RepGUIPanel extends JPanel {
 		btnSendForExecution = new JButton("Send For Execution");
 		btnSendForExecution.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String select = list.getSelectedValue().toString();				
+				String[] arr = select.split(",");
+				String id = ((arr[0].trim().split(":"))[1]).trim();
+				Rep rep = ServiceLocator.getRepService().getRep(Integer.parseInt(id));
+				Crd crd = ServiceLocator.getCrdService().createCrd(rep);	
+				list.clearSelection();
+				btnSendForExecution.setEnabled(false);
 			}
 		});
 		btnSendForExecution.setEnabled(false);
@@ -258,7 +274,7 @@ public class RepGUIPanel extends JPanel {
 		
 		scsoCommentField = new JTextField();
 		scsoCommentField.setBounds(193, 199, 203, 20);
-		scsoCommentField.setEnabled(false);
+		scsoCommentField.setEditable(false);
 		add(scsoCommentField);
 		scsoCommentField.setColumns(10);
 		
@@ -268,7 +284,7 @@ public class RepGUIPanel extends JPanel {
 		
 		fmCommentsTxtField = new JTextField();
 		fmCommentsTxtField.setBounds(190, 230, 206, 20);
-		fmCommentsTxtField.setEnabled(false);
+		fmCommentsTxtField.setEditable(false);
 		add(fmCommentsTxtField);
 		fmCommentsTxtField.setColumns(10);
 		
@@ -276,21 +292,27 @@ public class RepGUIPanel extends JPanel {
 		lblNewLabel_1.setBounds(82, 230, 61, 22);
 		add(lblNewLabel_1);
 		
-		if(!roles.contains("cso") &&  !roles.contains("scso")){
-			btnModify.setVisible(false);
-			btnDelete.setVisible(false);
+		lblNewLabel_2 = new JLabel("REP GUI");
+		lblNewLabel_2.setForeground(Color.BLUE);
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setBounds(92, 11, 328, 31);
+		add(lblNewLabel_2);
+		
+		if(!roles.contains("cso") &&  !roles.contains("scso")){			
+			btnDelete.setVisible(false);			
 		}
 		
 		if(roles.contains("scso")){
 			btnSendToFm.setVisible(true);
 			btnReject.setVisible(true);
 			btnSendForExecution.setVisible(true);
-			scsoCommentField.setEnabled(true);
+			scsoCommentField.setEditable(true);
 		}
 		
 		if(roles.contains("fm")){
 			btnSendToAdmin.setVisible(true);
-			fmCommentsTxtField.setEnabled(true);
+			fmCommentsTxtField.setEditable(true);
 		}
 		
 		if(roles.contains("admin")){
@@ -300,4 +322,13 @@ public class RepGUIPanel extends JPanel {
 		
 
 	}
+	
+	private void refreshListModel(DefaultListModel<String> model, ArrayList<Rep> reps){
+		model.clear();
+		for(Rep rep:reps){
+			model.addElement("Id: " + rep.getIdentifier() + ", Client: "+ rep.getClientName() + ", createdBy: " + rep.getUname()+ ", Status: " + rep.getState().toString());
+		}
+		
+	}
+	
 }

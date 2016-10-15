@@ -139,8 +139,13 @@ public class Login {
 					UnameTxtField.setText("");
 					passwordTxtField.setText("");
 					frmSwedishEventPlanner.remove(loginPanel);	
-					
-					frmSwedishEventPlanner.getContentPane().add(new RepGUIPanel(Login.this, session));					
+					ArrayList<String> roles = ServiceLocator.getSecurityService().getRoles(session.getCurrentUser());
+					if(roles.contains("pm") || roles.contains("sm")){
+						frmSwedishEventPlanner.getContentPane().add(new CrdGUIPanel(Login.this, session));
+					}else{
+						frmSwedishEventPlanner.getContentPane().add(new RepGUIPanel(Login.this, session));
+					}
+										
 					frmSwedishEventPlanner.getContentPane().revalidate();
 					frmSwedishEventPlanner.getContentPane().repaint();
 							
