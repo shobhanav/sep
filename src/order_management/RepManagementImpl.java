@@ -47,4 +47,29 @@ public class RepManagementImpl implements RepManagementInterface {
 	}
 
 
+	@Override
+	public void deleteRep(int id) {		
+		ArrayList<Rep> newRep = new ArrayList<Rep>();
+		for(Rep rep: reps){
+			if(rep.getIdentifier()!=id){
+				newRep.add(rep);
+			}				
+		}
+		reps = newRep;
+		
+	}
+
+
+	@Override
+	public ArrayList<Rep> getRep(RepState state) {
+		ArrayList<Rep> newRep = new ArrayList<Rep>();
+		for(Rep rep: reps){
+			if(rep.getState()==state){
+				newRep.add(rep);
+			}				
+		}
+		return newRep;
+	}
+
+
 }

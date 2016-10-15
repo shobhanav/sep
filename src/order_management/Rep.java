@@ -112,6 +112,10 @@ public class Rep {
 		comments.put(role, comment);
 	}
 	
+	public String getComment(String role){
+		return comments.get(role);
+	}
+	
 	public void setState (RepState state){
 		this.state = state;
 	}

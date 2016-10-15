@@ -10,8 +10,47 @@ public class UserManagementImpl implements UserManagementInterface {
 	
 	public UserManagementImpl() {
 		// TODO Auto-generated constructor stub
+		initUsers(authnMap);
+		initRoles(authzMap);
 	}
 	
+	private void initRoles(HashMap<String, ArrayList<String>> authzMap2) {
+		// authorization map
+		authzMap = new HashMap<String, ArrayList<String>>();
+		ArrayList<String> vpRoles = new ArrayList<String>();
+		vpRoles.add("vp");
+		authzMap.put("vp", vpRoles);
+
+		ArrayList<String> csoRoles = new ArrayList<String>();		
+		csoRoles.add("cso");
+		authzMap.put("cso1", csoRoles);
+		authzMap.put("cso2", csoRoles);
+
+		ArrayList<String> scsoRoles = new ArrayList<String>();		
+		scsoRoles.add("scso");
+		authzMap.put("scso", scsoRoles);
+
+		ArrayList<String> fmRoles = new ArrayList<String>();
+		fmRoles.add("fm");
+		authzMap.put("fm", fmRoles);
+		
+		ArrayList<String> adminRoles = new ArrayList<String>();		
+		adminRoles.add("admin");
+		authzMap.put("admin", adminRoles);
+	}
+
+	private void initUsers(HashMap<String, String> authnMap2) {
+		authnMap = new HashMap<String, String>();
+		authnMap.put("cso1", "password");
+		authnMap.put("cso2", "password");
+		authnMap.put("vp", "password");
+		authnMap.put("scso", "password");
+		authnMap.put("fm", "password");
+		authnMap.put("admin", "password");
+		authnMap.put("prod_manager", "password");
+		authnMap.put("service_manager", "password");		
+	}
+
 	UserManagementImpl(HashMap<String,String> authnMap, HashMap<String,ArrayList<String>> authzMap) {
 		this.authnMap = authnMap;
 		this.authzMap = authzMap;
@@ -20,6 +59,9 @@ public class UserManagementImpl implements UserManagementInterface {
 
 	@Override
 	public boolean isAuthenticated(String username, String password) {
+		if(username == null || password == null){
+			return false;
+		}
 		return (authnMap.containsKey(username) && authnMap.get(username).equals(password));
 	}
 

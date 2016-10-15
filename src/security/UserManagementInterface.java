@@ -2,7 +2,7 @@ package security;
 
 import java.util.ArrayList;
 
-public interface UserManagementInterface {
+public interface UserManagementInterface  {
 	
 	public boolean isAuthenticated(String username, String password);
 	

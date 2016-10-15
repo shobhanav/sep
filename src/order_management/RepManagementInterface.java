@@ -11,6 +11,9 @@ public interface RepManagementInterface {
 	public ArrayList<Rep> listRep(String uname);
 	
 	public Rep getRep(int id);
-
+	
+	public ArrayList<Rep> getRep(RepState state);
+	
+	public void deleteRep(int id);
 
 }
