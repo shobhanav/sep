@@ -34,7 +34,6 @@ public class Task {
 	public Task(Crd crd){	
 		this.identifier = index;
 		index = index +1;
-		this.identifier = 
 		this.id_crd = crd.getIdentifier();
 		this.clientName = crd.getClientName();
 		this.eventType = crd.getEventType();

@@ -1,6 +1,6 @@
 package framework;
 
-import order_management.CdManagementImpl;
+import order_management.CrdManagementImpl;
 import order_management.CrdManagementInterface;
 import order_management.RepManagementImpl;
 import order_management.RepManagementInterface;
@@ -10,7 +10,7 @@ import security.UserManagementInterface;
 public class ServiceLocator {
 	
 	private static RepManagementInterface rep = new RepManagementImpl();
-	private static CrdManagementInterface crd = new CdManagementImpl();
+	private static CrdManagementInterface crd = new CrdManagementImpl();
 	private static UserManagementInterface user = new UserManagementImpl();
 	
 	public static RepManagementInterface getRepService(){
