@@ -13,15 +13,21 @@ public class Task {
 	
 	private String eventType;
 	
-	private Date fromDate;
+	private Date fromDate_project;
 	
-	private Date toDate;
+	private Date toDate_project;
+	
+	private Date fromDate_task;
+	
+	private Date toDate_task;
 	
 	private int no_of_attendees;
 	
 	private int exp_budget_for_task;
 	
 	private Priority priority;
+	
+	private String team;
 	
 	private TaskState state;
 	
@@ -32,8 +38,8 @@ public class Task {
 		this.id_crd = crd.getIdentifier();
 		this.clientName = crd.getClientName();
 		this.eventType = crd.getEventType();
-		this.fromDate = crd.getFromDate();
-		this.toDate = crd.getToDate();
+		this.fromDate_project = crd.getFromDate();
+		this.toDate_project = crd.getToDate();
 		this.no_of_attendees = crd.getNo_of_attendees();
 		state = TaskState.CREATED;
 	}
@@ -54,20 +60,36 @@ public class Task {
 		this.eventType = eventType;
 	}
 
-	public Date getFromDate() {
-		return fromDate;
+	public Date getFromDate_project() {
+		return fromDate_project;
 	}
 
-	public void setFromDate(Date fromDate) {
-		this.fromDate = fromDate;
+	public void setFromDate_project(Date fromDate_project) {
+		this.fromDate_project = fromDate_project;
 	}
 
-	public Date getToDate() {
-		return toDate;
+	public Date getToDate_project() {
+		return toDate_project;
 	}
 
-	public void setToDate(Date toDate) {
-		this.toDate = toDate;
+	public void setToDate_project(Date toDate_project) {
+		this.toDate_project = toDate_project;
+	}
+
+	public Date getFromDate_task() {
+		return fromDate_task;
+	}
+
+	public void setFromDate_task(Date fromDate_task) {
+		this.fromDate_task = fromDate_task;
+	}
+
+	public Date getToDate_task() {
+		return toDate_task;
+	}
+
+	public void setToDate_task(Date toDate_task) {
+		this.toDate_task = toDate_task;
 	}
 
 	public int getNo_of_attendees() {
@@ -92,6 +114,15 @@ public class Task {
 
 	public void setPriority(Priority priority) {
 		this.priority = priority;
+	}
+
+	
+	public String getTeam() {
+		return team;
+	}
+
+	public void setTeam(String team) {
+		this.team = team;
 	}
 
 	public TaskState getState() {
