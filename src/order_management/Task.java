@@ -25,6 +25,8 @@ public class Task {
 	
 	private int exp_budget_for_task;
 	
+	private String description;
+	
 	private Priority priority;
 	
 	private String team;
@@ -139,5 +141,14 @@ public class Task {
 	public int getId_crd() {
 		return id_crd;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	
 }
