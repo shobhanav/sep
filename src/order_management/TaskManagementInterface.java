@@ -15,4 +15,6 @@ public interface TaskManagementInterface {
 	public ArrayList<Task> getTaskTeam(String team);
 	
 	public ArrayList<Task> getAllTask();
+	
+	public void deleteTask(int id);
 }

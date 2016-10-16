@@ -9,5 +9,7 @@ public interface CrdManagementInterface {
 	public Crd getCrd(Rep rep);
 	
 	public ArrayList<Crd> getAllCrd();
+	
+	public void deleteCrd (int id);
 
 }

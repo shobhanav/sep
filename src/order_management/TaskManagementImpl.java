@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class TaskManagementImpl implements TaskManagementInterface{
 
 	private ArrayList<Task> tasks = new ArrayList<Task>();
+	private ArrayList<Task> historyTasks = new ArrayList<Task>();
 	
 	@Override
 	public Task createTasks(Crd crd) {
@@ -51,6 +52,16 @@ public class TaskManagementImpl implements TaskManagementInterface{
 			}
 		}
 		return tasksTeam;
+	}
+
+	@Override
+	public void deleteTask(int id) {
+		for(Task task: tasks){
+			if(task.getIdentifier()==id){
+				historyTasks.add(task);
+				tasks.remove(task);
+			}
+		}
 	}
 
 }

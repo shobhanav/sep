@@ -17,4 +17,6 @@ public interface SubTaskManagementInterface {
 	public ArrayList<SubTask> getSubTaskTeamMember(String teamMember);
 	
 	public ArrayList<SubTask> getAllSubTask();
+	
+	public void deleteSubTask(int id);
 }

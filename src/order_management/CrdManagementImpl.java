@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class CrdManagementImpl implements CrdManagementInterface{
 
 	private ArrayList<Crd> crds = new ArrayList<Crd>();
+	private ArrayList<Crd> historyCrds = new ArrayList<Crd>();
 	
 	@Override
 	public Crd createCrd(Rep rep) {
@@ -26,6 +27,16 @@ public class CrdManagementImpl implements CrdManagementInterface{
 	@Override
 	public ArrayList<Crd> getAllCrd() {
 		return crds;
+	}
+
+	@Override
+	public void deleteCrd(int id) {
+		for(Crd crd: crds){
+			if(crd.getIdentifier()==id){
+				historyCrds.add(crd);
+				crds.remove(crd);
+			}
+		}
 	}
 
 }

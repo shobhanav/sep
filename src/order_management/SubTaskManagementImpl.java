@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class SubTaskManagementImpl implements SubTaskManagementInterface{
 	
 	private ArrayList<SubTask> subtasks = new ArrayList<SubTask>();
+	private ArrayList<SubTask> historySubTasks = new ArrayList<SubTask>();
 	
 	@Override
 	public SubTask createsubTasks(Task task) {
@@ -63,6 +64,16 @@ public class SubTaskManagementImpl implements SubTaskManagementInterface{
 	@Override
 	public ArrayList<SubTask> getAllSubTask() {
 		return subtasks;
+	}
+
+	@Override
+	public void deleteSubTask(int id) {
+		for(SubTask subtask: subtasks){
+			if(subtask.getIdentifier()==id){
+				historySubTasks.add(subtask);
+				subtasks.remove(subtask);
+			}
+		}
 	}
 
 }

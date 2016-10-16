@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class RepManagementImpl implements RepManagementInterface {
 	
 	private ArrayList<Rep> reps = new ArrayList<Rep>();
+	private ArrayList<Rep> historyReps = new ArrayList<Rep>();
 	
 	@Override
 	public Rep createRep(String uname, String clientName) {
@@ -49,14 +50,12 @@ public class RepManagementImpl implements RepManagementInterface {
 
 	@Override
 	public void deleteRep(int id) {		
-		ArrayList<Rep> newRep = new ArrayList<Rep>();
 		for(Rep rep: reps){
-			if(rep.getIdentifier()!=id){
-				newRep.add(rep);
-			}				
+			if(rep.getIdentifier()==id){
+				historyReps.add(rep);
+				reps.remove(rep);
+			}
 		}
-		reps = newRep;
-		
 	}
 
 
