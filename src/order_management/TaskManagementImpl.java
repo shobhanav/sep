@@ -1,6 +1,7 @@
 package order_management;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class TaskManagementImpl implements TaskManagementInterface{
 
@@ -8,14 +9,16 @@ public class TaskManagementImpl implements TaskManagementInterface{
 	private ArrayList<Task> historyTasks = new ArrayList<Task>();
 	
 	@Override
-	public Task createTasks(Crd crd) {
-		return new Task(crd);
+	public Task createTasks(Crd crd, String team) {
+		return new Task(crd,team);
 	}
 
 	@Override
 	public boolean addTask(Task task) {
-		tasks.add(task);
-		return true;
+		if (task == null || getTask(task.getIdentifier()) != null){
+			return false;
+		}
+		return tasks.add(task);
 	}
 
 	@Override
@@ -42,6 +45,17 @@ public class TaskManagementImpl implements TaskManagementInterface{
 		}
 		return null;
 	}
+	
+	@Override
+	public ArrayList<Task> getTaskCrd (Crd crd ) {
+		ArrayList<Task> tasksCrd = new ArrayList<Task>();
+		for(Task task : tasks){
+			if (task.getId_crd() == crd.getIdentifier()){
+				tasksCrd.add(task);
+			}
+		}
+		return tasksCrd;
+	}
 
 	@Override
 	public ArrayList<Task> getTaskTeam(String team) {
@@ -56,12 +70,18 @@ public class TaskManagementImpl implements TaskManagementInterface{
 
 	@Override
 	public void deleteTask(int id) {
-		for(Task task: tasks){
+		for(Iterator<Task> itTask = tasks.iterator(); itTask.hasNext();){
+			Task task = itTask.next();
 			if(task.getIdentifier()==id){
 				historyTasks.add(task);
-				tasks.remove(task);
+				itTask.remove();
 			}
 		}
+	}
+
+	@Override
+	public ArrayList<Task> getTaskHistory() {
+		return historyTasks;
 	}
 
 }

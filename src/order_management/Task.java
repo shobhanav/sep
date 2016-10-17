@@ -33,7 +33,7 @@ public class Task {
 	
 	private TaskState state;
 	
-	public Task(Crd crd){	
+	public Task(Crd crd, String team){	
 		this.identifier = index;
 		index = index +1;
 		this.id_crd = crd.getIdentifier();
@@ -42,6 +42,7 @@ public class Task {
 		this.fromDate_project = crd.getFromDate();
 		this.toDate_project = crd.getToDate();
 		this.no_of_attendees = crd.getNo_of_attendees();
+		this.team = team;
 		state = TaskState.CREATED;
 	}
 
