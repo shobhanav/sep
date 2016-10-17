@@ -1,6 +1,7 @@
 package order_management;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class EmployeeRequestManagementImpl implements EmployeeRequestManagementInterface{
 	private ArrayList<EmployeeRequest> requests = new ArrayList<EmployeeRequest>();
@@ -13,8 +14,10 @@ public class EmployeeRequestManagementImpl implements EmployeeRequestManagementI
 
 	@Override
 	public boolean addEmployeeRequest(EmployeeRequest request) {
-		requests.add(request);
-		return true;
+		if (request == null || getEmployeeRequest(request.getIdentifier()) != null){
+			return false;
+		}
+		return requests.add(request);
 	}
 
 	@Override
@@ -33,13 +36,19 @@ public class EmployeeRequestManagementImpl implements EmployeeRequestManagementI
 	}
 
 	@Override
-	public void deleteFinancialRequest(int id) {
-		for(EmployeeRequest request: requests){
+	public void deleteEmployeeRequest(int id) {
+		for(Iterator<EmployeeRequest> itRequest = requests.iterator(); itRequest.hasNext();){
+			EmployeeRequest request = itRequest.next();
 			if(request.getIdentifier()==id){
 				historyRequests.add(request);
-				requests.remove(request);
+				itRequest.remove();
 			}
 		}
+	}
+
+	@Override
+	public ArrayList<EmployeeRequest> getEmployeeRequestHistory() {
+		return historyRequests;
 	}
 
 }

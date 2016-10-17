@@ -11,5 +11,7 @@ public interface EmployeeRequestManagementInterface {
 	
 	public ArrayList<EmployeeRequest> getAllEmployeeRequest();
 	
-	public void deleteFinancialRequest(int id);
+	public void deleteEmployeeRequest(int id);
+	
+	public ArrayList<EmployeeRequest> getEmployeeRequestHistory();
 }
