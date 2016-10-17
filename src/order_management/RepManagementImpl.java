@@ -19,8 +19,7 @@ public class RepManagementImpl implements RepManagementInterface {
 		if(rep == null || getRep(rep.getIdentifier()) != null) {
 			return false;	
 		}
-		reps.add(rep);	
-		return true;
+		return reps.add(rep);
 	}
 
 	@Override
