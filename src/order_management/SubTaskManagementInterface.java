@@ -4,13 +4,17 @@ import java.util.ArrayList;
 
 public interface SubTaskManagementInterface {
 
-	public SubTask createsubTasks( Task task);
+	public SubTask createSubTasks( Task task, String teamMember);
 	
-	public boolean addsubTask(SubTask subTask);
+	public boolean addSubTask(SubTask subTask);
 	
 	public SubTask getSubTask(int id);
 	
 	public ArrayList<SubTask> getSubTask(Task task, String teamMember);
+	
+	public ArrayList<SubTask> getSubTaskTask(Task task);
+	
+	public ArrayList<SubTask> getSubTaskCrd(Crd crd);
 	
 	public ArrayList<SubTask> getSubTaskTeam(String team);
 	
@@ -19,4 +23,6 @@ public interface SubTaskManagementInterface {
 	public ArrayList<SubTask> getAllSubTask();
 	
 	public void deleteSubTask(int id);
+	
+	public ArrayList<SubTask> getSubTaskHistory();
 }

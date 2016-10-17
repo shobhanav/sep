@@ -36,7 +36,7 @@ public class SubTask {
 	
 	private SubTaskState state;
 	
-	public SubTask(Task task){	
+	public SubTask(Task task, String teamMember){	
 		this.identifier = index;
 		index = index +1;
 		this.id_task = task.getIdentifier();
@@ -46,6 +46,8 @@ public class SubTask {
 		this.fromDate_project = task.getFromDate_project();
 		this.toDate_project = task.getToDate_project();
 		this.no_of_attendees = task.getNo_of_attendees();
+		this.team = task.getTeam();
+		this.teamMember = teamMember;
 		state = SubTaskState.CREATED;
 	}
 
