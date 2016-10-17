@@ -1,6 +1,5 @@
 package order_management;
 
 public enum FinancialRequestState {
-	CREATED
-
+	CREATED,WAITING,ACCEPTED,REJECTED
 }
