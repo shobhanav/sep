@@ -31,6 +31,7 @@ public class CrdManagementImplTest {
 		rep.setState(RepState.APPROVED);
 		crd = CrdMng.createCrd(rep);
 		assertTrue("the name of the client is wrong", crd.getClientName().equals("client1"));
+		assertTrue("the name of the client is wrong", crd.getIdentifier() == rep.getIdentifier());
 	
 		ArrayList<Crd> list = CrdMng.getAllCrd();
 		assertTrue("CrdManagementImpl acess to a bad list", list.size() == 1);
