@@ -52,6 +52,18 @@ public class RepManagementImplTest {
 	}
 	
 	@Test
+	public void addTwoElementsIDREPTest() {
+		Rep rep = repMng.createRep("cso", "Ericson");
+		assertTrue("RepManagementImpl can't add a new rep", repMng.addRep(rep));
+		assertFalse("RepManagementImpl can't add a new rep", repMng.addRep(rep));
+		
+		ArrayList<Rep> list = repMng.listRep("cso");
+		assertTrue("RepManagementImpl acess to a bad list", list.size() == 1);
+		assertTrue("RepManagementImpl acess to a bad element", list.contains(rep));
+	}
+	
+	
+	@Test
 	public void listElementsREPTest() {
 		Rep rep = repMng.createRep("cso", "Ericson");
 		assertTrue("RepManagementImpl can't add a new rep", repMng.addRep(rep));
@@ -68,5 +80,33 @@ public class RepManagementImplTest {
 		
 	}
 	
+	@Test
+	public void deleteREPTest(){
+		Rep rep = repMng.createRep("cso", "Ericson");
+		assertTrue("RepManagementImpl can't add a new rep", repMng.addRep(rep));
+		
+		ArrayList<Rep> list = repMng.listRep("cso");
+		assertTrue("RepManagementImpl acess to a bad list", list.size() == 1);
+		assertTrue("RepManagementImpl acess to a bad element", list.contains(rep));
+		
+		rep = repMng.createRep("cso", "Dell");
+		assertTrue("RepManagementImpl can't add a new rep", repMng.addRep(rep));
+		
+		list = repMng.listRep("cso");
+		assertTrue("RepManagementImpl acess to a bad list", list.size() == 2);
+		assertTrue("RepManagementImpl acess to a bad element", list.contains(rep));
+		
+		ArrayList<Rep> history = repMng.getHistory();
+		assertTrue("RepManagementImpl acess to a bad history", history.size() == 0);
+		repMng.deleteRep(rep.getIdentifier());
+		list = repMng.listRep("cso");
+		assertTrue("RepManagementImpl acess to a bad list", list.size() == 1);
+		assertFalse("RepManagementImpl acess to a delete element", list.contains(rep));
+		
+		history = repMng.getHistory();
+		assertTrue("RepManagementImpl acess to a bad list", history.size() == 1);
+		assertTrue("RepManagementImpl can't acess to a delete element", history.contains(rep));	
+		
+	}
 
 }

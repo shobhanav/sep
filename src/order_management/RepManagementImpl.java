@@ -1,6 +1,7 @@
 package order_management;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class RepManagementImpl implements RepManagementInterface {
 	
@@ -15,8 +16,10 @@ public class RepManagementImpl implements RepManagementInterface {
 
 	@Override
 	public boolean addRep(Rep rep) {		
-		if(rep != null)
-			reps.add(rep);		
+		if(rep == null || getRep(rep.getIdentifier()) != null) {
+			return false;	
+		}
+		reps.add(rep);	
 		return true;
 	}
 
@@ -50,10 +53,11 @@ public class RepManagementImpl implements RepManagementInterface {
 
 	@Override
 	public void deleteRep(int id) {		
-		for(Rep rep: reps){
+		for(Iterator<Rep> itRep = reps.iterator();itRep.hasNext();){
+			Rep rep = itRep.next();
 			if(rep.getIdentifier()==id){
 				historyReps.add(rep);
-				reps.remove(rep);
+				itRep.remove();
 			}
 		}
 	}
@@ -68,6 +72,12 @@ public class RepManagementImpl implements RepManagementInterface {
 			}				
 		}
 		return newRep;
+	}
+
+
+	@Override
+	public ArrayList<Rep> getHistory() {
+		return historyReps;
 	}
 
 
