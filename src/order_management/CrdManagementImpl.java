@@ -1,6 +1,7 @@
 package order_management;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class CrdManagementImpl implements CrdManagementInterface{
 
@@ -9,6 +10,9 @@ public class CrdManagementImpl implements CrdManagementInterface{
 	
 	@Override
 	public Crd createCrd(Rep rep) {
+		if (rep.getState() != RepState.APPROVED){
+			return null; //avoid the creation of the crd for a wrong rep
+		}
 		Crd newCrd = new Crd(rep);
 		crds.add(newCrd);
 		return newCrd;
@@ -31,12 +35,28 @@ public class CrdManagementImpl implements CrdManagementInterface{
 
 	@Override
 	public void deleteCrd(int id) {
-		for(Crd crd: crds){
+		for(Iterator<Crd> itCrd = crds.iterator(); itCrd.hasNext();){
+			Crd crd = itCrd.next();
 			if(crd.getIdentifier()==id){
 				historyCrds.add(crd);
-				crds.remove(crd);
+				itCrd.remove();
 			}
 		}
+	}
+
+	@Override
+	public Crd getCrd(int id) {
+		for(Crd crd : crds){
+			if (crd.getIdentifier() == id){
+				return crd;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public ArrayList<Crd> getCrdHistory() {
+		return historyCrds;
 	}
 
 }
