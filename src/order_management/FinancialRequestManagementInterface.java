@@ -12,9 +12,15 @@ public interface FinancialRequestManagementInterface {
 	
 	public FinancialRequest getFinancialRequest(int id);
 	
-	public ArrayList<FinancialRequest> getFinancialRequest(Crd crd);
+	public ArrayList<FinancialRequest> getFinancialRequestCrd(Crd crd);
+	
+	public ArrayList<FinancialRequest> getFinancialRequestProject(int project_reference);
+	
+	public ArrayList<FinancialRequest> getFinancialRequestUser(String uname);
 	
 	public ArrayList<FinancialRequest> getAllFinancialRequest();
 	
 	public void deleteFinancialRequest(int id);
+	
+	public ArrayList<FinancialRequest> getFinancialRequestHistory();
 }
