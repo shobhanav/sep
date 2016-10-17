@@ -16,7 +16,7 @@ public class FinancialRequest {
 	
 	private String comment;
 	
-	private StateFinancialRequest state;
+	private FinancialRequestState state;
 	
 	public FinancialRequest(Crd crd, String uname){
 		this(crd.getIdentifier(),uname);
@@ -27,7 +27,7 @@ public class FinancialRequest {
 		index = index +1;
 		this.project_reference = project_reference;
 		this.uname = uname;
-		this.state = StateFinancialRequest.CREATED;
+		this.state = FinancialRequestState.CREATED;
 	}
 
 	public String getDepartment() {
@@ -66,11 +66,11 @@ public class FinancialRequest {
 		return identifier;
 	}
 
-	public StateFinancialRequest getState() {
+	public FinancialRequestState getState() {
 		return state;
 	}
 
-	public void setState(StateFinancialRequest state) {
+	public void setState(FinancialRequestState state) {
 		this.state = state;
 	}
 

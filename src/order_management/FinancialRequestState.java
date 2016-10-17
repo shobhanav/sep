@@ -1,6 +1,6 @@
 package order_management;
 
-public enum StateFinancialRequest {
+public enum FinancialRequestState {
 	CREATED
 
 }

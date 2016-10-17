@@ -17,13 +17,13 @@ public class EmployeeRequest {
 	
 	private boolean fullTime;
 	
-	private StateEmployeeRequest state;
+	private EmployeeRequestState state;
 	
 	public EmployeeRequest(String uname){
 		this.identifier = index;
 		index = index +1;
 		this.uname = uname;
-		this.state = StateEmployeeRequest.CREATED;
+		this.state = EmployeeRequestState.CREATED;
 	}
 
 	public String getDepartment() {
@@ -74,11 +74,11 @@ public class EmployeeRequest {
 		this.fullTime = fullTime;
 	}
 
-	public StateEmployeeRequest getState() {
+	public EmployeeRequestState getState() {
 		return state;
 	}
 
-	public void setState(StateEmployeeRequest state) {
+	public void setState(EmployeeRequestState state) {
 		this.state = state;
 	}
 

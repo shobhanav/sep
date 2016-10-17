@@ -1,6 +1,6 @@
 package order_management;
 
-public enum StateEmployeeRequest {
+public enum EmployeeRequestState {
 	CREATED
 
 }
