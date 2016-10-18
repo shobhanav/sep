@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
 
 import framework.ServiceLocator;
 import framework.Session;
+import order_management.Crd;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -94,7 +95,7 @@ public class Login {
 		gbc_lblNewLabel_1.gridy = 0;
 		CentrePnl.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
-		UnameTxtField = new JTextField("fm");
+		UnameTxtField = new JTextField("cso1");
 		GridBagConstraints gbc_UnameTxtField = new GridBagConstraints();
 		gbc_UnameTxtField.fill = GridBagConstraints.BOTH;
 		gbc_UnameTxtField.insets = new Insets(0, 0, 5, 5);
@@ -139,7 +140,7 @@ public class Login {
 					UnameTxtField.setText("");
 					passwordTxtField.setText("");
 					frmSwedishEventPlanner.remove(loginPanel);	
-					frmSwedishEventPlanner.getContentPane().add(new UserInterface(Login.this, session));			
+					frmSwedishEventPlanner.getContentPane().add(new CrdGUIPanel(Login.this, session));			
 					frmSwedishEventPlanner.getContentPane().revalidate();
 					frmSwedishEventPlanner.getContentPane().repaint();
 				}else{
@@ -217,6 +218,26 @@ public class Login {
 	public void task(Session sess, JPanel previousPanel){
 		frmSwedishEventPlanner.remove(previousPanel);
 		//frmSwedishEventPlanner.getContentPane().add(new TaskGUIPanel(Login.this, session));
+		frmSwedishEventPlanner.getContentPane().revalidate();
+		frmSwedishEventPlanner.getContentPane().repaint();
+	}
+	public void createtask(Session sess, JPanel previousPanel, Crd crd){
+		frmSwedishEventPlanner.remove(previousPanel);
+		frmSwedishEventPlanner.getContentPane().add(new TaskCreate(Login.this, session, crd));
+		frmSwedishEventPlanner.getContentPane().revalidate();
+		frmSwedishEventPlanner.getContentPane().repaint();
+	}
+	
+	public void createFinancial(Session sess, JPanel previousPanel, Crd crd){
+		frmSwedishEventPlanner.remove(previousPanel);
+		frmSwedishEventPlanner.getContentPane().add(new CreateFinancial(Login.this, session, crd));
+		frmSwedishEventPlanner.getContentPane().revalidate();
+		frmSwedishEventPlanner.getContentPane().repaint();
+	}
+	
+	public void createRecruitment(Session sess, JPanel previousPanel){
+		frmSwedishEventPlanner.remove(previousPanel);
+		frmSwedishEventPlanner.getContentPane().add(new CreateRecruitment(Login.this, session));
 		frmSwedishEventPlanner.getContentPane().revalidate();
 		frmSwedishEventPlanner.getContentPane().repaint();
 	}

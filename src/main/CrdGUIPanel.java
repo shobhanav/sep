@@ -120,7 +120,7 @@ public class CrdGUIPanel extends JPanel {
 				String[] arr = select.split(",");
 				String id = ((arr[0].trim().split(":"))[1]).trim();
 				Crd crd = ServiceLocator.getCrdService().getCrd(Integer.parseInt(id));
-				prev.createfinancial(sess, me, crd);
+				prev.createFinancial(sess, me, crd);
 			}
 		});
 		btnFinancialrequest.setBounds(230, 242, 175, 24);
@@ -135,7 +135,7 @@ public class CrdGUIPanel extends JPanel {
 				String[] arr = select.split(",");
 				String id = ((arr[0].trim().split(":"))[1]).trim();
 				Crd crd = ServiceLocator.getCrdService().getCrd(Integer.parseInt(id));
-				prev.createrecruitment(sess, me, crd);
+				prev.createRecruitment(sess, me);
 			}
 		});
 		btnRecruitmentRequest.setBounds(229, 274, 180, 25);

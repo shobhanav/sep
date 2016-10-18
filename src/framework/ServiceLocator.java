@@ -2,6 +2,10 @@ package framework;
 
 import order_management.CrdManagementImpl;
 import order_management.CrdManagementInterface;
+import order_management.EmployeeRequestManagementImpl;
+import order_management.EmployeeRequestManagementInterface;
+import order_management.FinancialRequestManagementImpl;
+import order_management.FinancialRequestManagementInterface;
 import order_management.RepManagementImpl;
 import order_management.RepManagementInterface;
 import order_management.TaskManagementImpl;
@@ -15,6 +19,8 @@ public class ServiceLocator {
 	private static CrdManagementInterface crd = new CrdManagementImpl();
 	private static UserManagementInterface user = new UserManagementImpl();
 	private static TaskManagementInterface task = new TaskManagementImpl();
+	private static  FinancialRequestManagementInterface financial = new FinancialRequestManagementImpl();
+	private static  EmployeeRequestManagementInterface employee = new EmployeeRequestManagementImpl();
 	
 	public static RepManagementInterface getRepService(){
 		return rep;
@@ -32,5 +38,13 @@ public class ServiceLocator {
 		return task;
 	}
 	
+	public static FinancialRequestManagementInterface getFinancialService(){
+		return financial;
 	}
+	
+	public static EmployeeRequestManagementInterface getEmployeeService(){
+		return employee;
+	}
+	
+}
 
