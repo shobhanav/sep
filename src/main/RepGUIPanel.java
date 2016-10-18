@@ -226,7 +226,9 @@ public class RepGUIPanel extends JPanel {
 				btnReject.setEnabled(false);
 				if (sess.getCurrentUser().equals("admin")){
 					refreshListModel(listModel, ServiceLocator.getRepService().getRep(RepState.REVIEWED_BY_FM));
-				}else{
+				} else if (sess.getCurrentUser().equals("fm")){
+					refreshListModel(listModel, ServiceLocator.getRepService().getRep(RepState.REVIEWED_BY_SCSO));
+				} else	{
 					refreshListModel(listModel, ServiceLocator.getRepService().listRep("all"));
 				}
 				
