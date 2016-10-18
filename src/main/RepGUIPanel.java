@@ -69,7 +69,7 @@ public class RepGUIPanel extends JPanel {
 		}else if(roles.contains("fm")){
 			repList = ServiceLocator.getRepService().getRep(RepState.REVIEWED_BY_SCSO);
 		}else if(roles.contains("admin")){
-			repList = ServiceLocator.getRepService().getRep(RepState.REVIEWED_BY_FM);
+			repList = ServiceLocator.getRepService().listRep("all");
 		}
 		
 		final DefaultListModel<String> listModel = new DefaultListModel<String>();
@@ -144,6 +144,7 @@ public class RepGUIPanel extends JPanel {
 		JButton btnCreate = new JButton("Create");
 		btnCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//missing create Rep
 				Rep rep = ServiceLocator.getRepService().createRep(sess.getCurrentUser(), "XYZ corp");
 				ServiceLocator.getRepService().addRep(rep);
 				refreshListModel(listModel, ServiceLocator.getRepService().listRep(sess.getCurrentUser()=="scso"?"all":sess.getCurrentUser()));
@@ -152,9 +153,7 @@ public class RepGUIPanel extends JPanel {
 		btnCreate.setBounds(103, 11, 89, 23);
 		
 		Btnpanel.add(btnCreate);
-		if(!roles.contains("cso") && !roles.contains("scso") ){
-			btnCreate.setVisible(false);
-		}
+
 		
 		btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
@@ -180,9 +179,11 @@ public class RepGUIPanel extends JPanel {
 				String[] arr = select.split(",");
 				String id = ((arr[0].trim().split(":"))[1]).trim();
 				Rep rep = ServiceLocator.getRepService().getRep(Integer.parseInt(id));
-				rep.setState(RepState.REVIEWED_BY_SCSO);
-				String comment = scsoCommentField.getText();
-				rep.addComment("scso", comment);
+				if (rep.getState() == RepState.CREATED){
+					rep.setState(RepState.REVIEWED_BY_SCSO);
+					String comment = scsoCommentField.getText();
+					rep.addComment("scso", comment);
+				}
 				list.clearSelection();
 				listModel.clear();
 				
@@ -206,7 +207,7 @@ public class RepGUIPanel extends JPanel {
 				String comment = fmCommentsTxtField.getText();
 				rep.addComment("fm", comment);
 				list.clearSelection();
-				refreshListModel(listModel, ServiceLocator.getRepService().getRep(RepState.REVIEWED_BY_SCSO));
+				refreshListModel(listModel, ServiceLocator.getRepService().listRep("all"));
 			}
 		});
 		btnSendToAdmin.setBounds(236, 263, 124, 23);
@@ -221,12 +222,12 @@ public class RepGUIPanel extends JPanel {
 				String[] arr = select.split(",");
 				String id = ((arr[0].trim().split(":"))[1]).trim();
 				Rep rep = ServiceLocator.getRepService().getRep(Integer.parseInt(id));
-				rep.setState(RepState.REJECTED);
+				if (!sess.getCurrentUser().equals("admin")|| rep.getState() == RepState.REVIEWED_BY_FM ){
+					rep.setState(RepState.REJECTED);
+				}
 				list.clearSelection();
 				btnReject.setEnabled(false);
-				if (sess.getCurrentUser().equals("admin")){
-					refreshListModel(listModel, ServiceLocator.getRepService().getRep(RepState.REVIEWED_BY_FM));
-				} else if (sess.getCurrentUser().equals("fm")){
+				if (sess.getCurrentUser().equals("fm")){
 					refreshListModel(listModel, ServiceLocator.getRepService().getRep(RepState.REVIEWED_BY_SCSO));
 				} else	{
 					refreshListModel(listModel, ServiceLocator.getRepService().listRep("all"));
@@ -246,10 +247,12 @@ public class RepGUIPanel extends JPanel {
 				String[] arr = select.split(",");
 				String id = ((arr[0].trim().split(":"))[1]).trim();
 				Rep rep = ServiceLocator.getRepService().getRep(Integer.parseInt(id));
-				rep.setState(RepState.APPROVED);
+				if (rep.getState() == RepState.REVIEWED_BY_FM){
+					rep.setState(RepState.APPROVED);
+				}
 				list.clearSelection();
 				btnApprove.setEnabled(false);
-				refreshListModel(listModel, ServiceLocator.getRepService().getRep(RepState.REVIEWED_BY_FM));
+				refreshListModel(listModel, ServiceLocator.getRepService().listRep("all"));
 			}
 		});
 		btnApprove.setEnabled(false);
@@ -305,6 +308,12 @@ public class RepGUIPanel extends JPanel {
 		lblNewLabel_2.setBounds(92, 11, 328, 31);
 		add(lblNewLabel_2);
 		
+		
+		
+		//visibility for the different function
+		if(!roles.contains("cso") && !roles.contains("scso") ){
+			btnCreate.setVisible(false);
+		}
 		if(!roles.contains("cso") &&  !roles.contains("scso")){			
 			btnDelete.setVisible(false);			
 		}
