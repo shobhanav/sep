@@ -108,7 +108,7 @@ public class TaskGUIPanel extends JPanel {
 					String[] arr = select.split(",");
 					String id = ((arr[0].trim().split(":"))[1]).trim();
 					Task task = ServiceLocator.getTaskService().getTask(Integer.parseInt(id));
-					//prev.createsubtask(sess, me, task);
+					prev.createSubTask(sess, me, task);
 				}
 			});
 			btnCreateSubTask.setBounds(28, 175, 148, 23);

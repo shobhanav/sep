@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 import framework.ServiceLocator;
 import framework.Session;
 import order_management.Crd;
+import order_management.Task;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -238,6 +239,13 @@ public class Login {
 	public void createRecruitment(Session sess, JPanel previousPanel){
 		frmSwedishEventPlanner.remove(previousPanel);
 		frmSwedishEventPlanner.getContentPane().add(new CreateRecruitment(Login.this, session));
+		frmSwedishEventPlanner.getContentPane().revalidate();
+		frmSwedishEventPlanner.getContentPane().repaint();
+	}
+	
+	public void createSubTask(Session sess, JPanel previousPanel,Task task){
+		frmSwedishEventPlanner.remove(previousPanel);
+		frmSwedishEventPlanner.getContentPane().add(new SubTaskCreate(Login.this, session,task));
 		frmSwedishEventPlanner.getContentPane().revalidate();
 		frmSwedishEventPlanner.getContentPane().repaint();
 	}
