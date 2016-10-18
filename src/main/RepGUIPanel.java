@@ -57,24 +57,10 @@ public class RepGUIPanel extends JPanel {
 	public RepGUIPanel(Login login, Session session) {
 		final Login prev = login;
 		final Session sess = session;
-		
-		ArrayList<String> roles = ServiceLocator.getSecurityService().getRoles(sess.getCurrentUser());
-		ArrayList<Rep> repList = new ArrayList<Rep>();
-		
-		//get work list based on the role
-		if(roles.contains("scso") || roles.contains("vp")){
-			repList = ServiceLocator.getRepService().listRep("all");
-		}else if(roles.contains("cso")){
-			repList = ServiceLocator.getRepService().listRep(sess.getCurrentUser());
-		}else if(roles.contains("fm")){
-			repList = ServiceLocator.getRepService().getRep(RepState.REVIEWED_BY_SCSO);
-		}else if(roles.contains("admin")){
-			repList = ServiceLocator.getRepService().listRep("all");
-		}
-		
+		final ArrayList<String> roles = ServiceLocator.getSecurityService().getRoles(sess.getCurrentUser());		
 		final DefaultListModel<String> listModel = new DefaultListModel<String>();
 		
-		refreshListModel(listModel, repList);
+		refreshListModel(listModel, sess);
 		setLayout(null);
 		
 		list = new JList();
@@ -89,7 +75,6 @@ public class RepGUIPanel extends JPanel {
 					btnSendToFm.setEnabled(true);
 					btnApprove.setEnabled(true);
 					btnReject.setEnabled(true);
-					
 					btnSendForExecution.setEnabled(true);
 					
 					String select = list.getSelectedValue().toString();				
@@ -127,10 +112,12 @@ public class RepGUIPanel extends JPanel {
 		list.setModel(listModel);
 		add(list);
 		
+		//window
 		JPanel Btnpanel = new JPanel();
 		Btnpanel.setBounds(0, 348, 619, 65);
 		add(Btnpanel);
 		
+		//button sign out
 		JButton btnNewButton = new JButton("Sign out");
 		btnNewButton.setBounds(0, 11, 93, 23);
 		btnNewButton.addActionListener(new ActionListener() {
@@ -141,20 +128,20 @@ public class RepGUIPanel extends JPanel {
 		Btnpanel.setLayout(null);
 		Btnpanel.add(btnNewButton);
 		
+		//button create
 		JButton btnCreate = new JButton("Create");
 		btnCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//missing create Rep
 				Rep rep = ServiceLocator.getRepService().createRep(sess.getCurrentUser(), "XYZ corp");
 				ServiceLocator.getRepService().addRep(rep);
-				refreshListModel(listModel, ServiceLocator.getRepService().listRep(sess.getCurrentUser()=="scso"?"all":sess.getCurrentUser()));
+				refreshListModel(listModel, sess);
 			}
 		});		
 		btnCreate.setBounds(103, 11, 89, 23);
-		
 		Btnpanel.add(btnCreate);
 
-		
+		//button delete
 		btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -163,15 +150,14 @@ public class RepGUIPanel extends JPanel {
 				String[] arr = select.split(",");
 				String id = ((arr[0].trim().split(":"))[1]).trim();
 				ServiceLocator.getRepService().deleteRep(Integer.parseInt(id));
-				list.clearSelection();
-				listModel.remove(index);
+				refreshListModel(listModel, sess);
 			}
 		});
 		btnDelete.setEnabled(false);
 		btnDelete.setBounds(301, 11, 89, 23);		
-		
 		Btnpanel.add(btnDelete);
 		
+		//button sendtoFM
 		btnSendToFm = new JButton("Send to Fm");
 		btnSendToFm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -185,10 +171,7 @@ public class RepGUIPanel extends JPanel {
 					rep.addComment("scso", comment);
 				}
 				list.clearSelection();
-				listModel.clear();
-				
-				ArrayList<Rep> reps = ServiceLocator.getRepService().listRep("all");
-				refreshListModel(listModel, reps);
+				refreshListModel(listModel, sess);
 			}
 		});
 		btnSendToFm.setBounds(92, 263, 116, 23);
@@ -196,6 +179,7 @@ public class RepGUIPanel extends JPanel {
 		btnSendToFm.setVisible(false);
 		add(btnSendToFm);
 		
+		//button send to admin
 		btnSendToAdmin = new JButton("Send to Admin");
 		btnSendToAdmin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -207,7 +191,7 @@ public class RepGUIPanel extends JPanel {
 				String comment = fmCommentsTxtField.getText();
 				rep.addComment("fm", comment);
 				list.clearSelection();
-				refreshListModel(listModel, ServiceLocator.getRepService().listRep("all"));
+				refreshListModel(listModel, sess);
 			}
 		});
 		btnSendToAdmin.setBounds(236, 263, 124, 23);
@@ -215,6 +199,7 @@ public class RepGUIPanel extends JPanel {
 		btnSendToAdmin.setVisible(false);
 		add(btnSendToAdmin);
 		
+		//button reject
 		btnReject = new JButton("Reject");
 		btnReject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -222,17 +207,12 @@ public class RepGUIPanel extends JPanel {
 				String[] arr = select.split(",");
 				String id = ((arr[0].trim().split(":"))[1]).trim();
 				Rep rep = ServiceLocator.getRepService().getRep(Integer.parseInt(id));
-				if (!sess.getCurrentUser().equals("admin")|| rep.getState() == RepState.REVIEWED_BY_FM ){
+				if (!roles.contains("admin")|| rep.getState() == RepState.REVIEWED_BY_FM ){
 					rep.setState(RepState.REJECTED);
 				}
 				list.clearSelection();
 				btnReject.setEnabled(false);
-				if (sess.getCurrentUser().equals("fm")){
-					refreshListModel(listModel, ServiceLocator.getRepService().getRep(RepState.REVIEWED_BY_SCSO));
-				} else	{
-					refreshListModel(listModel, ServiceLocator.getRepService().listRep("all"));
-				}
-				
+				refreshListModel(listModel, sess);
 			}
 		});
 		btnReject.setEnabled(false);
@@ -240,6 +220,7 @@ public class RepGUIPanel extends JPanel {
 		btnReject.setVisible(false);
 		add(btnReject);
 		
+		//button approve
 		btnApprove = new JButton("Approve");
 		btnApprove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -252,7 +233,7 @@ public class RepGUIPanel extends JPanel {
 				}
 				list.clearSelection();
 				btnApprove.setEnabled(false);
-				refreshListModel(listModel, ServiceLocator.getRepService().listRep("all"));
+				refreshListModel(listModel, sess);
 			}
 		});
 		btnApprove.setEnabled(false);
@@ -260,6 +241,7 @@ public class RepGUIPanel extends JPanel {
 		btnApprove.setVisible(false);
 		add(btnApprove);
 		
+		//button send for execution
 		btnSendForExecution = new JButton("Send For Execution");
 		btnSendForExecution.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -273,7 +255,7 @@ public class RepGUIPanel extends JPanel {
 				}
 				list.clearSelection();
 				btnSendForExecution.setEnabled(false);
-				refreshListModel(listModel, ServiceLocator.getRepService().listRep("all"));
+				refreshListModel(listModel, sess);
 			}
 		});
 		btnSendForExecution.setEnabled(false);
@@ -317,31 +299,39 @@ public class RepGUIPanel extends JPanel {
 		if(!roles.contains("cso") &&  !roles.contains("scso")){			
 			btnDelete.setVisible(false);			
 		}
-		
 		if(roles.contains("scso")){
 			btnSendToFm.setVisible(true);
 			btnReject.setVisible(true);
 			btnSendForExecution.setVisible(true);
 			scsoCommentField.setEditable(true);
 		}
-		
 		if(roles.contains("fm")){
 			btnSendToAdmin.setVisible(true);
 			fmCommentsTxtField.setEditable(true);
 			btnReject.setVisible(true);
 		}
-		
 		if(roles.contains("admin")){
 			btnReject.setVisible(true);
 			btnApprove.setVisible(true);
 		}	
-		
-
 	}
 	
-	private void refreshListModel(DefaultListModel<String> model, ArrayList<Rep> reps){
+	private void refreshListModel(DefaultListModel<String> model, Session sess){
+		ArrayList<String> roles = ServiceLocator.getSecurityService().getRoles(sess.getCurrentUser());
+		ArrayList<Rep> repList = new ArrayList<Rep>();
+		
+		//get work list based on the role
+		if(roles.contains("scso") || roles.contains("vp")){
+			repList = ServiceLocator.getRepService().listRep("all");
+		}else if(roles.contains("cso")){
+			repList = ServiceLocator.getRepService().listRep(sess.getCurrentUser());
+		}else if(roles.contains("fm")){
+			repList = ServiceLocator.getRepService().getRep(RepState.REVIEWED_BY_SCSO);
+		}else if(roles.contains("admin")){
+			repList = ServiceLocator.getRepService().listRep("all");
+		}
 		model.clear();
-		for(Rep rep:reps){
+		for(Rep rep:repList){
 			model.addElement("Id: " + rep.getIdentifier() + ", Client: "+ rep.getClientName() + ", createdBy: " + rep.getUname()+ ", Status: " + rep.getState().toString());
 		}
 		
