@@ -313,6 +313,7 @@ public class RepGUIPanel extends JPanel {
 		if(roles.contains("fm")){
 			btnSendToAdmin.setVisible(true);
 			fmCommentsTxtField.setEditable(true);
+			btnReject.setVisible(true);
 		}
 		
 		if(roles.contains("admin")){
