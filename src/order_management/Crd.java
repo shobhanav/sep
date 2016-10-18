@@ -102,5 +102,9 @@ public class Crd {
 	public String getTask(String team){
 		return this.tasks.get(team);
 	}
+	
+	public HashMap<String,String> getTask(){
+		return this.tasks;
+	}
 
 }
