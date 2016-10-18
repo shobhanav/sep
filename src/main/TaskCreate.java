@@ -76,10 +76,16 @@ public class TaskCreate extends JPanel {
 						descriptionField.setText(description);
 					else
 						descriptionField.setText("");
-					
+					String team = task.getTeam();
+					if(team != null && !team.isEmpty())
+						teamField.setText(team);
+					else
+						teamField.setText("");
+					buttonUpdate.setEnabled(true);
+					buttonDelete.setEnabled(true);
 				}else{					
-					btnCreateTask.setEnabled(false);
-					
+					buttonUpdate.setEnabled(false);
+					buttonDelete.setEnabled(false);
 				}
 			}
 		});
@@ -108,6 +114,7 @@ public class TaskCreate extends JPanel {
 						descriptionCrdField.setText(description);
 					else
 						descriptionCrdField.setText("");
+					btnCreateTask.setEnabled(true);
 					
 				}else{					
 					btnCreateTask.setEnabled(false);
@@ -178,22 +185,31 @@ public class TaskCreate extends JPanel {
 		buttonUpdate = new JButton("Update Task");
 		buttonUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Task task = ServiceLocator.getTaskService().getTask(crd, teamField.getText());
+				String select = list.getSelectedValue().toString();				
+				String[] arr = select.split(",");
+				String id = ((arr[0].trim().split(":"))[1]).trim();
+				Task task = ServiceLocator.getTaskService().getTask(Integer.parseInt(id));
 				task.setDescription(descriptionField.getText());
 			}
 		});
 		buttonUpdate.setBounds(232, 209, 139, 25);
+		buttonUpdate.setEnabled(false);
 		add(buttonUpdate);
-		
+
+
 		buttonDelete = new JButton("Delete Task");
 		buttonDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Task task = ServiceLocator.getTaskService().getTask(crd, teamField.getText());
+				String select = list.getSelectedValue().toString();				
+				String[] arr = select.split(",");
+				String id = ((arr[0].trim().split(":"))[1]).trim();
+				Task task = ServiceLocator.getTaskService().getTask(Integer.parseInt(id));
 				ServiceLocator.getTaskService().deleteTask(task.getIdentifier());
 				refreshListModel(listModel, crd);
 			}
 		});
 		buttonDelete.setBounds(384, 209, 130, 25);
+		buttonDelete.setEnabled(false);
 		add(buttonDelete);
 		
 		JLabel label = new JLabel("Description");
