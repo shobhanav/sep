@@ -264,9 +264,13 @@ public class RepGUIPanel extends JPanel {
 				String[] arr = select.split(",");
 				String id = ((arr[0].trim().split(":"))[1]).trim();
 				Rep rep = ServiceLocator.getRepService().getRep(Integer.parseInt(id));
-				Crd crd = ServiceLocator.getCrdService().createCrd(rep);	
+				if (rep.getState() == RepState.APPROVED){
+					Crd crd = ServiceLocator.getCrdService().createCrd(rep);
+					ServiceLocator.getRepService().deleteRep(rep.getIdentifier());
+				}
 				list.clearSelection();
 				btnSendForExecution.setEnabled(false);
+				refreshListModel(listModel, ServiceLocator.getRepService().listRep("all"));
 			}
 		});
 		btnSendForExecution.setEnabled(false);
