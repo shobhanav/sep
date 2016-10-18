@@ -56,7 +56,7 @@ public class FinancialGUIPanel extends JPanel {
 			
 			final DefaultListModel<String> listModel = new DefaultListModel<String>();
 			ArrayList<FinancialRequest> requests;
-			if (roles.contains("rh")){
+			if (roles.contains("fm")){
 				requests = ServiceLocator.getFinancialService().getAllFinancialRequest();
 			}else{
 				requests = ServiceLocator.getFinancialService().getFinancialRequestUser(sess.getCurrentUser());

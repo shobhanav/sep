@@ -101,7 +101,7 @@ public class TaskCreate extends JPanel {
 		for(String team: crd.getTask().keySet()){
 			listModelCrd.addElement("team :" + team);
 		}	
-		listModelCrd.addElement("team :" + "empty");
+		listModelCrd.addElement("team : empty");
 		listCrd = new JList();
 		listCrd.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
