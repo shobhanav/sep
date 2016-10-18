@@ -214,4 +214,10 @@ public class Login {
 		frmSwedishEventPlanner.getContentPane().revalidate();
 		frmSwedishEventPlanner.getContentPane().repaint();
 	}
+	public void task(Session sess, JPanel previousPanel){
+		frmSwedishEventPlanner.remove(previousPanel);
+		//frmSwedishEventPlanner.getContentPane().add(new TaskGUIPanel(Login.this, session));
+		frmSwedishEventPlanner.getContentPane().revalidate();
+		frmSwedishEventPlanner.getContentPane().repaint();
+	}
 }

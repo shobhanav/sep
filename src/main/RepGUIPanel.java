@@ -159,6 +159,7 @@ public class RepGUIPanel extends JPanel {
 		btnDelete.setBounds(312, 11, 89, 23);		
 		Btnpanel.add(btnDelete);
 		
+		//button previous
 		btnprevious = new JButton("previous ");
 		btnprevious.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

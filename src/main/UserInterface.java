@@ -22,6 +22,7 @@ public class UserInterface extends JPanel {
 	JButton buttonFinancial;
 	JButton buttonSignout;
 	private JButton buttonSubTask;
+	private JButton buttonTask;
 	
 	/**
 	 * Create the panel.
@@ -89,7 +90,7 @@ public class UserInterface extends JPanel {
 		add(buttonSignout);
 		
 		buttonSubTask = new JButton("SubTask");
-		buttonSubTask.setBounds(0, 161, 94, 25);
+		buttonSubTask.setBounds(-5, 191, 94, 25);
 		buttonSubTask.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				prev.subtask(sess,me);
@@ -99,16 +100,29 @@ public class UserInterface extends JPanel {
 		buttonSubTask.setAlignmentY(Component.TOP_ALIGNMENT);
 		add(buttonSubTask);
 		
+		buttonTask = new JButton("Task");
+		buttonTask.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				prev.task(sess,me);
+			}
+		});
+		buttonTask.setBounds(0, 154, 117, 25);
+		buttonTask.setVisible(false);
+		add(buttonTask);
+		
 		
 		//visibility for the different function
 		if(roles.contains("cso") ||  roles.contains("scso") || roles.contains("admin") || roles.contains("fm") ){			
 			buttonRep.setVisible(true);			
 		}
-		if(roles.contains("pm") || roles.contains("sm") || roles.contains("rt")){
+		if(roles.contains("pm") || roles.contains("sm")){
 			buttonCrd.setVisible(true);
 		}
 		if(roles.contains("pm") || roles.contains("sm") ||roles.contains("fm")){
 			buttonFinancial.setVisible(true);
+		}
+		if(roles.contains("pm") || roles.contains("sm") ||roles.contains("rt")){
+			buttonTask.setVisible(true);
 		}
 		if(roles.contains("pm") || roles.contains("sm") || roles.contains("rh")){
 			buttonRecruitment.setVisible(true);
