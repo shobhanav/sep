@@ -49,13 +49,17 @@ public class Login {
 			public void run() {
 				try {
 					Login window = new Login();
-					window.frmSwedishEventPlanner.setSize(1000, 600);
-					window.frmSwedishEventPlanner.setVisible(true);
+					window.startGUI(window);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+	}
+	
+	public void startGUI(Login window){
+		window.frmSwedishEventPlanner.setSize(1000, 600);
+		window.frmSwedishEventPlanner.setVisible(true);
 	}
 
 	/**
