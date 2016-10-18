@@ -48,6 +48,7 @@ public class RepGUIPanel extends JPanel {
 	private JTextField fmCommentsTxtField;
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
+	private JButton btnprevious;
 	
 	
 
@@ -59,6 +60,7 @@ public class RepGUIPanel extends JPanel {
 		final Session sess = session;
 		final ArrayList<String> roles = ServiceLocator.getSecurityService().getRoles(sess.getCurrentUser());		
 		final DefaultListModel<String> listModel = new DefaultListModel<String>();
+		final RepGUIPanel me = this;
 		
 		refreshListModel(listModel, sess);
 		setLayout(null);
@@ -154,8 +156,17 @@ public class RepGUIPanel extends JPanel {
 			}
 		});
 		btnDelete.setEnabled(false);
-		btnDelete.setBounds(301, 11, 89, 23);		
+		btnDelete.setBounds(312, 11, 89, 23);		
 		Btnpanel.add(btnDelete);
+		
+		btnprevious = new JButton("previous ");
+		btnprevious.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				prev.user(sess, me);
+			}
+		});
+		btnprevious.setBounds(201, 10, 99, 24);
+		Btnpanel.add(btnprevious);
 		
 		//button sendtoFM
 		btnSendToFm = new JButton("Send to Fm");

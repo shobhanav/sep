@@ -139,16 +139,9 @@ public class Login {
 					UnameTxtField.setText("");
 					passwordTxtField.setText("");
 					frmSwedishEventPlanner.remove(loginPanel);	
-					ArrayList<String> roles = ServiceLocator.getSecurityService().getRoles(session.getCurrentUser());
-					if(roles.contains("pm") || roles.contains("sm")){
-						frmSwedishEventPlanner.getContentPane().add(new CrdGUIPanel(Login.this, session));
-					}else{
-						frmSwedishEventPlanner.getContentPane().add(new RepGUIPanel(Login.this, session));
-					}
-										
+					frmSwedishEventPlanner.getContentPane().add(new UserInterface(Login.this, session));			
 					frmSwedishEventPlanner.getContentPane().revalidate();
 					frmSwedishEventPlanner.getContentPane().repaint();
-							
 				}else{
 					JOptionPane.showMessageDialog(frmSwedishEventPlanner, "Invalid username or password");
 				}
@@ -183,5 +176,42 @@ public class Login {
 			}
 		});
 	}
+	
+	public void rep(Session sess, JPanel previousPanel){
+		frmSwedishEventPlanner.remove(previousPanel);
+		frmSwedishEventPlanner.getContentPane().add(new RepGUIPanel(Login.this, session));
+		frmSwedishEventPlanner.getContentPane().revalidate();
+		frmSwedishEventPlanner.getContentPane().repaint();
+	}
 
+	public void crd(Session sess, JPanel previousPanel){
+		frmSwedishEventPlanner.remove(previousPanel);
+		frmSwedishEventPlanner.getContentPane().add(new CrdGUIPanel(Login.this, session));
+		frmSwedishEventPlanner.getContentPane().revalidate();
+		frmSwedishEventPlanner.getContentPane().repaint();
+	}
+	public void recruitment(Session sess, JPanel previousPanel){
+		frmSwedishEventPlanner.remove(previousPanel);
+		//frmSwedishEventPlanner.getContentPane().add(new RecruitmentGUIPanel(Login.this, session));
+		frmSwedishEventPlanner.getContentPane().revalidate();
+		frmSwedishEventPlanner.getContentPane().repaint();
+	}
+	public void financial(Session sess, JPanel previousPanel){
+		frmSwedishEventPlanner.remove(previousPanel);
+		//frmSwedishEventPlanner.getContentPane().add(new FinancialGUIPanel(Login.this, session));
+		frmSwedishEventPlanner.getContentPane().revalidate();
+		frmSwedishEventPlanner.getContentPane().repaint();
+	}
+	public void user(Session sess, JPanel previousPanel){
+		frmSwedishEventPlanner.remove(previousPanel);
+		frmSwedishEventPlanner.getContentPane().add(new UserInterface(Login.this, session));
+		frmSwedishEventPlanner.getContentPane().revalidate();
+		frmSwedishEventPlanner.getContentPane().repaint();
+	}
+	public void subtask(Session sess, JPanel previousPanel){
+		frmSwedishEventPlanner.remove(previousPanel);
+		//frmSwedishEventPlanner.getContentPane().add(new SubTaskGUIPanel(Login.this, session));
+		frmSwedishEventPlanner.getContentPane().revalidate();
+		frmSwedishEventPlanner.getContentPane().repaint();
+	}
 }
