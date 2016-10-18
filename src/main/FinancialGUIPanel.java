@@ -26,8 +26,6 @@ import order_management.FinancialRequestState;
 
 public class FinancialGUIPanel extends JPanel {
 
-
-
 	JList list;
 	JButton btnSignOut;
 	JButton btnReject;
@@ -210,6 +208,5 @@ public class FinancialGUIPanel extends JPanel {
 			}
 			
 		}
-
 }
 

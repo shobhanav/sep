@@ -194,13 +194,13 @@ public class Login {
 	}
 	public void recruitment(Session sess, JPanel previousPanel){
 		frmSwedishEventPlanner.remove(previousPanel);
-		//frmSwedishEventPlanner.getContentPane().add(new RecruitmentGUIPanel(Login.this, session));
+		frmSwedishEventPlanner.getContentPane().add(new RecruitmentGUIPanel(Login.this, session));
 		frmSwedishEventPlanner.getContentPane().revalidate();
 		frmSwedishEventPlanner.getContentPane().repaint();
 	}
 	public void financial(Session sess, JPanel previousPanel){
 		frmSwedishEventPlanner.remove(previousPanel);
-		//frmSwedishEventPlanner.getContentPane().add(new FinancialGUIPanel(Login.this, session));
+		frmSwedishEventPlanner.getContentPane().add(new FinancialGUIPanel(Login.this, session));
 		frmSwedishEventPlanner.getContentPane().revalidate();
 		frmSwedishEventPlanner.getContentPane().repaint();
 	}
@@ -212,13 +212,13 @@ public class Login {
 	}
 	public void subtask(Session sess, JPanel previousPanel){
 		frmSwedishEventPlanner.remove(previousPanel);
-		//frmSwedishEventPlanner.getContentPane().add(new SubTaskGUIPanel(Login.this, session));
+		frmSwedishEventPlanner.getContentPane().add(new SubTaskGUIpanel(Login.this, session));
 		frmSwedishEventPlanner.getContentPane().revalidate();
 		frmSwedishEventPlanner.getContentPane().repaint();
 	}
 	public void task(Session sess, JPanel previousPanel){
 		frmSwedishEventPlanner.remove(previousPanel);
-		//frmSwedishEventPlanner.getContentPane().add(new TaskGUIPanel(Login.this, session));
+		frmSwedishEventPlanner.getContentPane().add(new TaskGUIPanel(Login.this, session));
 		frmSwedishEventPlanner.getContentPane().revalidate();
 		frmSwedishEventPlanner.getContentPane().repaint();
 	}

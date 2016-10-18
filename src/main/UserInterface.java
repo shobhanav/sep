@@ -127,7 +127,7 @@ public class UserInterface extends JPanel {
 		if(roles.contains("pm") || roles.contains("sm") || roles.contains("rh")){
 			buttonRecruitment.setVisible(true);
 		}
-		if(roles.contains("pm") || roles.contains("sm") || roles.contains("tm")){
+		if(roles.contains("pm") || roles.contains("sm") || roles.contains("tm") || roles.contains("rt")){
 			buttonSubTask.setVisible(true);
 		}
 	}	
