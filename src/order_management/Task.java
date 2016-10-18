@@ -27,6 +27,8 @@ public class Task {
 	
 	private String description;
 	
+	private String review;
+	
 	private Priority priority;
 	
 	private String team;
@@ -149,6 +151,14 @@ public class Task {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getReview() {
+		return review;
+	}
+
+	public void setReview(String review) {
+		this.review = review;
 	}
 
 	

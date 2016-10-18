@@ -10,6 +10,7 @@ import javax.swing.event.ListSelectionListener;
 import framework.ServiceLocator;
 import framework.Session;
 import order_management.Crd;
+import order_management.CrdState;
 import order_management.Rep;
 
 import java.awt.Color;
@@ -95,6 +96,7 @@ public class CrdGUIPanel extends JPanel {
 				String[] arr = select.split(",");
 				String id = ((arr[0].trim().split(":"))[1]).trim();
 				Crd crd = ServiceLocator.getCrdService().getCrd(Integer.parseInt(id));
+				crd.setState(CrdState.WAITING);
 				prev.createtask(sess, me, crd);
 			}
 		});
