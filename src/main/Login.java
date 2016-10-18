@@ -141,7 +141,7 @@ public class Login {
 					UnameTxtField.setText("");
 					passwordTxtField.setText("");
 					frmSwedishEventPlanner.remove(loginPanel);	
-					frmSwedishEventPlanner.getContentPane().add(new CrdGUIPanel(Login.this, session));			
+					frmSwedishEventPlanner.getContentPane().add(new UserInterface(Login.this, session));			
 					frmSwedishEventPlanner.getContentPane().revalidate();
 					frmSwedishEventPlanner.getContentPane().repaint();
 				}else{
