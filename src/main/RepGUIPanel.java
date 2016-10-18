@@ -72,12 +72,6 @@ public class RepGUIPanel extends JPanel {
 			public void valueChanged(ListSelectionEvent e) {
 				if(list.getSelectedIndex() != -1){
 					
-					btnDelete.setEnabled(true);
-					btnSendToAdmin.setEnabled(true);
-					btnSendToFm.setEnabled(true);
-					btnApprove.setEnabled(true);
-					btnReject.setEnabled(true);
-					btnSendForExecution.setEnabled(true);
 					
 					String select = list.getSelectedValue().toString();				
 					String[] arr = select.split(",");
@@ -95,6 +89,34 @@ public class RepGUIPanel extends JPanel {
 						fmCommentsTxtField.setText(fmComm);
 					else
 						fmCommentsTxtField.setText("");
+					
+					//control of flux 
+					btnDelete.setEnabled(false);
+					btnSendToAdmin.setEnabled(false);
+					btnSendToFm.setEnabled(false);
+					btnApprove.setEnabled(false);
+					btnReject.setEnabled(false);
+					btnSendForExecution.setEnabled(false);
+
+
+					if (rep.getState() == RepState.CREATED){
+						btnSendToFm.setEnabled(true);
+					}
+					if (rep.getState() == RepState.REVIEWED_BY_SCSO){
+						btnSendToAdmin.setEnabled(true);
+					}
+					if (rep.getState() == RepState.REVIEWED_BY_FM){
+						btnApprove.setEnabled(true);
+					}
+					if (rep.getState() == RepState.APPROVED){
+						btnSendForExecution.setEnabled(true);
+					}
+					
+					//reject an request all the time
+					btnReject.setEnabled(true);
+					//delete all time
+					btnDelete.setEnabled(true);
+					
 								
 					
 				}else{					
@@ -177,11 +199,9 @@ public class RepGUIPanel extends JPanel {
 				String[] arr = select.split(",");
 				String id = ((arr[0].trim().split(":"))[1]).trim();
 				Rep rep = ServiceLocator.getRepService().getRep(Integer.parseInt(id));
-				if (rep.getState() == RepState.CREATED){
-					rep.setState(RepState.REVIEWED_BY_SCSO);
-					String comment = scsoCommentField.getText();
-					rep.addComment("scso", comment);
-				}
+				rep.setState(RepState.REVIEWED_BY_SCSO);
+				String comment = scsoCommentField.getText();
+				rep.addComment("scso", comment);
 				list.clearSelection();
 				refreshListModel(listModel, sess);
 			}
@@ -219,9 +239,7 @@ public class RepGUIPanel extends JPanel {
 				String[] arr = select.split(",");
 				String id = ((arr[0].trim().split(":"))[1]).trim();
 				Rep rep = ServiceLocator.getRepService().getRep(Integer.parseInt(id));
-				if (!roles.contains("admin")|| rep.getState() == RepState.REVIEWED_BY_FM ){
-					rep.setState(RepState.REJECTED);
-				}
+				rep.setState(RepState.REJECTED);
 				list.clearSelection();
 				btnReject.setEnabled(false);
 				refreshListModel(listModel, sess);
@@ -240,9 +258,7 @@ public class RepGUIPanel extends JPanel {
 				String[] arr = select.split(",");
 				String id = ((arr[0].trim().split(":"))[1]).trim();
 				Rep rep = ServiceLocator.getRepService().getRep(Integer.parseInt(id));
-				if (rep.getState() == RepState.REVIEWED_BY_FM){
-					rep.setState(RepState.APPROVED);
-				}
+				rep.setState(RepState.APPROVED);
 				list.clearSelection();
 				btnApprove.setEnabled(false);
 				refreshListModel(listModel, sess);
@@ -261,10 +277,8 @@ public class RepGUIPanel extends JPanel {
 				String[] arr = select.split(",");
 				String id = ((arr[0].trim().split(":"))[1]).trim();
 				Rep rep = ServiceLocator.getRepService().getRep(Integer.parseInt(id));
-				if (rep.getState() == RepState.APPROVED){
-					Crd crd = ServiceLocator.getCrdService().createCrd(rep);
-					ServiceLocator.getRepService().deleteRep(rep.getIdentifier());
-				}
+				Crd crd = ServiceLocator.getCrdService().createCrd(rep);
+				ServiceLocator.getRepService().deleteRep(rep.getIdentifier());
 				list.clearSelection();
 				btnSendForExecution.setEnabled(false);
 				refreshListModel(listModel, sess);
