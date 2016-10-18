@@ -16,16 +16,28 @@ public class TestLogin {
 			Login window = new Login();
 			window.startGUI(window);
 			
-			robot.delay(5000);
+			robot.delay(500);
 			robot.keyPress(KeyEvent.VK_END);
-			robot.delay(1000);
+			robot.delay(500);
 			robot.keyPress(KeyEvent.VK_TAB);
-			robot.delay(1000);
+			robot.delay(500);
 			robot.keyPress(KeyEvent.VK_END);
-			robot.delay(1000);
+			robot.delay(500);
 			robot.keyPress(KeyEvent.VK_TAB);
-			robot.delay(1000);
+			robot.delay(500);
+			robot.keyPress(KeyEvent.VK_END);
+			robot.delay(500);
 			robot.keyPress(KeyEvent.VK_SPACE);
+			robot.delay(500);
+			robot.keyPress(KeyEvent.VK_END);
+			robot.delay(500);
+			robot.keyPress(KeyEvent.VK_TAB);
+			robot.delay(500);
+			robot.keyPress(KeyEvent.VK_END);
+			robot.delay(500);
+			robot.keyPress(KeyEvent.VK_TAB);
+			robot.delay(500);
+			robot.keyPress(KeyEvent.VK_END);
 			robot.keyRelease(KeyEvent.VK_SPACE);
 			
 			

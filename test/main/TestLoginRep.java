@@ -86,11 +86,6 @@ public class TestLoginRep extends UITestCaseSwing {
 		ui.click(new JListLocator("Id: 1, Client: XYZ corp, createdBy: cso1, Status: APPROVED"));
 		ui.click(new JButtonLocator("Send For Execution"));
 		ui.click(new JButtonLocator("Sign out"));
-		ui.click(new LabeledTextLocator("Username:"));
-		ui.enterText("pm");
-		ui.click(new LabeledTextLocator("Password:"));
-		ui.enterText("password");
-		ui.click(new JButtonLocator("Login"));
 	}
 
 }

@@ -161,7 +161,7 @@ public class TaskGUIPanel extends JPanel {
 			lblComment.setBounds(106, 159, 70, 15);
 			add(lblComment);
 			
-			if(!roles.contains("pm") || !roles.contains("sm")){
+			if(!roles.contains("pm") && !roles.contains("sm")){
 				btnReview.setVisible(true);
 				btnCreateSubTask.setVisible(true);
 			}

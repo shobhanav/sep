@@ -122,7 +122,7 @@ public class SubTaskCreate extends JPanel {
 		btnprevious = new JButton("previous ");
 		btnprevious.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				prev.crd(sess, me);
+				prev.task(sess, me);
 			}
 		});
 		btnprevious.setBounds(232, 242, 99, 24);
@@ -137,6 +137,7 @@ public class SubTaskCreate extends JPanel {
 		
 		descriptionTaskField = new JTextField();
 		descriptionTaskField.setEditable(false);
+		descriptionTaskField.setText(task.getDescription());
 		descriptionTaskField.setBounds(34, 57, 172, 62);
 		add(descriptionTaskField);
 		descriptionTaskField.setColumns(10);
