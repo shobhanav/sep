@@ -32,6 +32,8 @@ public class SubTask {
 	
 	private String team;
 	
+	private String Description;
+	
 	private String teamMember;
 	
 	private SubTaskState state;
@@ -157,6 +159,14 @@ public class SubTask {
 
 	public int getId_crd() {
 		return id_crd;
+	}
+
+	public String getDescription() {
+		return Description;
+	}
+
+	public void setDescription(String description) {
+		Description = description;
 	}
 	
 	

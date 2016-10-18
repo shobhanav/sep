@@ -8,6 +8,8 @@ import order_management.FinancialRequestManagementImpl;
 import order_management.FinancialRequestManagementInterface;
 import order_management.RepManagementImpl;
 import order_management.RepManagementInterface;
+import order_management.SubTaskManagementImpl;
+import order_management.SubTaskManagementInterface;
 import order_management.TaskManagementImpl;
 import order_management.TaskManagementInterface;
 import security.UserManagementImpl;
@@ -21,6 +23,7 @@ public class ServiceLocator {
 	private static TaskManagementInterface task = new TaskManagementImpl();
 	private static  FinancialRequestManagementInterface financial = new FinancialRequestManagementImpl();
 	private static  EmployeeRequestManagementInterface employee = new EmployeeRequestManagementImpl();
+	private static SubTaskManagementInterface subtask = new SubTaskManagementImpl();
 	
 	public static RepManagementInterface getRepService(){
 		return rep;
@@ -46,5 +49,8 @@ public class ServiceLocator {
 		return employee;
 	}
 	
+	public static SubTaskManagementInterface getSubTaskService(){
+		return subtask;
+	}
 }
 
