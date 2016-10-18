@@ -43,6 +43,7 @@ public class TaskGUIPanel extends JPanel {
 			final Login prev = login;
 			final Session sess = session;
 			final TaskGUIPanel me = this;
+			final ArrayList<String> roles = ServiceLocator.getSecurityService().getRoles(sess.getCurrentUser());
 			
 			setLayout(null);
 			
@@ -54,10 +55,15 @@ public class TaskGUIPanel extends JPanel {
 			add(lblNewLabel);
 			
 			final DefaultListModel<String> listModel = new DefaultListModel<String>();
-			ArrayList<Task> tasks = ServiceLocator.getTaskService().getTaskTeam(sess.getCurrentUser());
+			ArrayList<Task> tasks;
+			if(roles.contains("pm") || roles.contains("sm")){
+				tasks = ServiceLocator.getTaskService().getAllTask();
+			}else{
+				tasks = ServiceLocator.getTaskService().getTaskTeam(sess.getCurrentUser());
+			}
 			
 			for(Task task : tasks){
-				listModel.addElement("Id: " + task.getIdentifier()+ ", Client: " + task.getClientName());
+				listModel.addElement("Id: " + task.getIdentifier()+ ", Client: " + task.getClientName()+", state: "+task.getState());
 			}		
 			list = new JList();
 			list.addListSelectionListener(new ListSelectionListener() {
@@ -112,8 +118,10 @@ public class TaskGUIPanel extends JPanel {
 				}
 			});
 			btnCreateSubTask.setBounds(28, 175, 148, 23);
-			add(btnCreateSubTask);
 			btnCreateSubTask.setEnabled(false);
+			btnCreateSubTask.setVisible(false);
+			add(btnCreateSubTask);
+			
 			
 			//button previous
 			btnprevious = new JButton("previous ");
@@ -140,6 +148,7 @@ public class TaskGUIPanel extends JPanel {
 			});
 			btnReview.setBounds(12, 201, 175, 24);
 			btnReview.setEnabled(false);
+			btnReview.setVisible(false);
 			add(btnReview);
 			
 			commentField = new JTextField();
@@ -151,25 +160,26 @@ public class TaskGUIPanel extends JPanel {
 			lblComment = new JLabel("Comment");
 			lblComment.setBounds(106, 159, 70, 15);
 			add(lblComment);
+			
+			if(!roles.contains("pm") || !roles.contains("sm")){
+				btnReview.setVisible(true);
+				btnCreateSubTask.setVisible(true);
+			}
+			
+			
 		}
 		
 		private void refreshListModel(DefaultListModel<String> model, Session sess){
 			ArrayList<String> roles = ServiceLocator.getSecurityService().getRoles(sess.getCurrentUser());
-			ArrayList<Rep> repList = new ArrayList<Rep>();
-			
-			//get work list based on the role
-			if(roles.contains("scso") || roles.contains("vp")){
-				repList = ServiceLocator.getRepService().listRep("all");
-			}else if(roles.contains("cso")){
-				repList = ServiceLocator.getRepService().listRep(sess.getCurrentUser());
-			}else if(roles.contains("fm")){
-				repList = ServiceLocator.getRepService().getRep(RepState.REVIEWED_BY_SCSO);
-			}else if(roles.contains("admin")){
-				repList = ServiceLocator.getRepService().listRep("all");
+			ArrayList<Task> tasks;
+			if(roles.contains("pm") || roles.contains("sm")){
+				tasks = ServiceLocator.getTaskService().getAllTask();
+			}else{
+				tasks = ServiceLocator.getTaskService().getTaskTeam(sess.getCurrentUser());
 			}
-			model.clear();
-			for(Rep rep:repList){
-				model.addElement("Id: " + rep.getIdentifier() + ", Client: "+ rep.getClientName() + ", createdBy: " + rep.getUname()+ ", Status: " + rep.getState().toString());
+
+			for(Task task : tasks){
+				model.addElement("Id: " + task.getIdentifier()+ ", Client: " + task.getClientName()+", state: "+task.getState());
 			}
 			
 		}
