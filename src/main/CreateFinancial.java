@@ -19,8 +19,8 @@ public class CreateFinancial extends JPanel {
 	JButton btnSignOut;
 	JButton btnCreateFinancial;
 	JButton btnprevious;
-	JTextField DepartmentField;
-	JTextField CommentField;
+	JTextField departmentField;
+	JTextField commentField;
 	private JLabel label;
 	private JLabel label_1;
 	
@@ -49,8 +49,8 @@ public class CreateFinancial extends JPanel {
 		btnCreateFinancial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FinancialRequest request = ServiceLocator.getFinancialService().createFinancialRequest(crd, sess.getCurrentUser());
-				request.setDepartment(DepartmentField.getText());
-				request.setComment(CommentField.getText());
+				request.setDepartment(departmentField.getText());
+				request.setComment(commentField.getText());
 				ServiceLocator.getFinancialService().addFinancialRequest(request);
 				prev.crd(sess, me);
 			}
@@ -68,17 +68,17 @@ public class CreateFinancial extends JPanel {
 		btnprevious.setBounds(258, 231, 99, 25);
 		add(btnprevious);
 		
-		DepartmentField = new JTextField();
-		DepartmentField.setEditable(true);
-		DepartmentField.setBounds(111, 108, 195, 83);
-		add(DepartmentField);
-		DepartmentField.setColumns(10);
+		departmentField = new JTextField();
+		departmentField.setEditable(true);
+		departmentField.setBounds(113, 62, 132, 19);
+		add(departmentField);
+		departmentField.setColumns(10);
 		
-		CommentField = new JTextField();
-		CommentField.setEditable(true);
-		CommentField.setBounds(124, 55, 114, 23);
-		add(CommentField);
-		CommentField.setColumns(10);
+		commentField = new JTextField();
+		commentField.setEditable(true);
+		commentField.setBounds(113, 115, 180, 97);
+		add(commentField);
+		commentField.setColumns(10);
 		
 		label = new JLabel("Departement");
 		label.setBounds(12, 57, 107, 19);
