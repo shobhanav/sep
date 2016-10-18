@@ -55,8 +55,8 @@ public class UserManagementImpl implements UserManagementInterface {
 		authnMap.put("scso", "password");
 		authnMap.put("fm", "password");
 		authnMap.put("admin", "password");
-		authnMap.put("prod_manager", "password");
-		authnMap.put("service_manager", "password");		
+		authnMap.put("pm", "password");
+		authnMap.put("sm", "password");		
 	}
 
 	UserManagementImpl(HashMap<String,String> authnMap, HashMap<String,ArrayList<String>> authzMap) {
